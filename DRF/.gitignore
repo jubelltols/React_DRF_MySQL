@@ -1,0 +1,5 @@
+# created by virtualenv automatically
+/Lib
+/Scripts
+/src/onbici/.env
+pyvenv.cfg
