@@ -1,10 +1,15 @@
 # React_DRF_MySql
 
-## ¿Que es React_DRF_MySql?
+# ¿Que es React_DRF_MySql?
 
 React_DRF_MySql es el tercer proyecto del curso 2 DAW. Se trata de una plataforma de alquiler de bicicletas. Esta formada por dos partes:
  - Cliente: parte en la que se puede realizar el alquiler de bicicletas y enviar incidencias. 
  - Administrador: parte en la que hay una dashboard con estadisticas y se puede administar las bicicletas, estaciones, slots y incidencias 
+
+![dashboard](https://github.com/jubelltols/React_DRF_MySql/blob/main/React/onbici/public/onbici-1.png)
+![CRUD stations](https://github.com/jubelltols/React_DRF_MySql/blob/main/React/onbici/public/onbici-4.png)
+![Rent a bike list](https://github.com/jubelltols/React_DRF_MySql/blob/main/React/onbici/public/onbici-2.png)
+![Remt a bike Google Maps](https://github.com/jubelltols/React_DRF_MySql/blob/main/React/onbici/public/onbici-3.png)
 
 # Instalación
 
@@ -16,7 +21,7 @@ React_DRF_MySql es el tercer proyecto del curso 2 DAW. Se trata de una plataform
 * NodeJS 
 * NPM 
 
-### Clonar el repositorio
+Clonar el repositorio
 
 ```
     git clone https://github.com/jubelltols/React_DRF_MySql.git
@@ -24,7 +29,7 @@ React_DRF_MySql es el tercer proyecto del curso 2 DAW. Se trata de una plataform
 
 ## Backend
 
-### Crear .env en la carpeta /React_DRF_MySql/DRF/src/onbici
+Crear .env en la carpeta /React_DRF_MySql/DRF/src/onbici
 
 ```
     DJANGO_SECRET_KEY=django_secret_key
@@ -35,7 +40,7 @@ React_DRF_MySql es el tercer proyecto del curso 2 DAW. Se trata de una plataform
     DATABASES_PORT=port
 ```
 
-### Comandos terminal
+Comandos terminal
 
 ```
     cd React_DRF_MySql
@@ -50,15 +55,15 @@ React_DRF_MySql es el tercer proyecto del curso 2 DAW. Se trata de una plataform
     python manage.py runserver
 ```
 
-### Backend
+## Frontend
 
-### Crear .env en la carpeta /React_DRF_MySql/React/onbici/src
+Crear .env en la carpeta /React_DRF_MySql/React/onbici/src
 
 ```
     GOOGLE_MAPS_APIKEY=your_google_apikey
 ```
 
-### Comandos terminal
+Comandos terminal
 
 ```
     cd React_DRF_MySql/React/onbici
@@ -103,7 +108,7 @@ React_DRF_MySql es el tercer proyecto del curso 2 DAW. Se trata de una plataform
 
 # Modulos
 
-| Module |  |
+| Modules | Description |
 |------|-----------------------------------------------------|
 | User | Login, Register, Change Password and Update profile |
 | Rent | Rent a bike, Incidences and Google Maps |
@@ -113,11 +118,6 @@ React_DRF_MySql es el tercer proyecto del curso 2 DAW. Se trata de una plataform
 | Incidences |  Create, Read, End incidence and Delete incidence |
 | Notification | List notification and Alert new notification |
 | Dashboard | Charts, List last 10 rent and Most used stations  |
-
-![dashboard](https://github.com/jubelltols/React_DRF_MySql/blob/main/React/onbici/public/onbici-1.png)
-![CRUD stations](https://github.com/jubelltols/React_DRF_MySql/blob/main/React/onbici/public/onbici-4.png)
-![Rent a bike list](https://github.com/jubelltols/React_DRF_MySql/blob/main/React/onbici/public/onbici-2.png)
-![Remt a bike Google Maps](https://github.com/jubelltols/React_DRF_MySql/blob/main/React/onbici/public/onbici-3.png)
 
 # Autor
 
