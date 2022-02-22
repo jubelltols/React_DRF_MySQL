@@ -8,7 +8,7 @@ export default function UpdateUser() {
     const { updateUser, status, user } = useAuth();
     
     return (
-        <div className="d-flex justify-content-center m-5">
+        <div className="d-flex justify-content-center p-5 shadow bg-body rounded">
             <div className="col-sm-8 col-md-8 col-lg-8">
                 <h1 className="mb-3 text-black">Profile</h1>
                 <form className="needs-validation" onSubmit={handleSubmit(updateUser)}>
@@ -48,7 +48,7 @@ export default function UpdateUser() {
 
                     <div className="row g-3 mt-1">
                         <div className="col-12">
-                            <button className="w-100 btn btn-primary btn-lg" type="submit" control-id="ControlID-20">Update profile</button>    
+                            <button className="w-100 btn btn-dark btn-lg" type="submit" control-id="ControlID-20">Update profile</button>    
                         </div>
                     </div>
                 </form>

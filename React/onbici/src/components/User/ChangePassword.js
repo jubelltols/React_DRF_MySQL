@@ -13,7 +13,7 @@ export default function ChangePassword() {
             { status.loading ? (
                 <SpinnerLoading/>
             ) : (
-                <div className="d-flex justify-content-center m-5">
+                <div className="d-flex justify-content-center p-5 shadow bg-body rounded">
                     <div className="col-sm-8 col-md-8 col-lg-8">
                         <h1 className="mb-3 text-black">Update Password</h1>
                         <form className="needs-validation" onSubmit={handleSubmit(changePassword)}>
@@ -43,7 +43,7 @@ export default function ChangePassword() {
 
                             <div className="row g-3 mt-1">
                                 <div className="col-12">
-                                    <button className="w-100 btn btn-primary btn-lg" type="submit" control-id="ControlID-20">Change Password</button>    
+                                    <button className="w-100 btn btn-dark btn-lg" type="submit" control-id="ControlID-20">Change Password</button>    
                                 </div>
                             </div>
                         </form>

@@ -15,7 +15,7 @@ export default function IncidencesUpdate() {
                 <h1 className="mb-3 text-black">Update incidences</h1>
                 <form className="needs-validation" onSubmit={handleSubmit(data => updateIncidence(id, data))}>
                     {incidences.map(( incidence, index ) => (
-                        incidence.id === id ?
+                        Number(incidence.id) === Number(id) ?
                         <>
                             <div className="row g-3 mt-1">
                                 <div className="col-sm-12">
@@ -65,7 +65,7 @@ export default function IncidencesUpdate() {
                     </div>
                     <div className="row g-3 mt-1">
                         <div className="col-12">
-                            <button className="w-100 btn btn-primary btn-lg" type="submit" control-id="ControlID-20">Create incidences</button>    
+                            <button className="w-100 btn btn-primary btn-lg" type="submit" control-id="ControlID-20">Update incidences</button>    
                         </div>
                     </div>
                 </form>

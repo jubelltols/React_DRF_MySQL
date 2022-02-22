@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom'
 import StationsLine from './StationsLine'
 import { Card, Row, Col } from 'react-bootstrap'
 
-export default function StationsTable ({ stations }) {
+export default function StationsTable ({ stations, deleteStation, changeStatusStation }) {
 
     return  (
         <div className='table-responsive' style={{backgroundColor: '#f2f2f2'}}>
-        <Card className="shadow p-3 mb-5 bg-body rounded m-5">
+        <Card className="shadow p-3 mb-5 bg-body rounded m-5 w-80">
             <Card.Body className='m-2'>
                 <Row className='mb-2'>
                     <Col xs={9}  className="d-flex justify-content-start">
@@ -31,7 +31,7 @@ export default function StationsTable ({ stations }) {
                     <tbody>
                         {
                             stations.map(( station, index ) => (
-                                <StationsLine key={index} station={station}/>
+                                <StationsLine key={index} station={station} deleteStation={deleteStation} changeStatusStation={changeStatusStation}/>
                             ))
                         }
                     </tbody>

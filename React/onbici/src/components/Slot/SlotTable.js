@@ -8,7 +8,7 @@ export default function SlotTable ({ slot, deleteSlot, changeStatusSlot }) {
 
     return  (
         <div className='table-responsive d-flex' style={{backgroundColor: '#e8e8e8'}}>
-        <Card className="shadow p-3 mb-5 bg-body rounded m-5">
+        <Card className="shadow p-3 mb-5 bg-body rounded m-5 w-100">
             <Card.Body className='m-2'>
                 <Row className='mb-2'>
                     <Col xs={9}  className="d-flex justify-content-start">

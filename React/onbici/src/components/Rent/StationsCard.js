@@ -34,7 +34,7 @@ export default function StationsCard ({ station }) {
                                 <div className='d-flex justify-content'>
                                     <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-1">
                                         {station.slots.map((slot, index) => (
-                                            <RentButtons key={index} slot={slot} index={index} click_rent={click_rent}/>
+                                            <RentButtons key={index} slot={slot} index={index} click_rent={click_rent} setRentClick={setRentClick}/>
                                         ))}
                                     </div>
                                 </div>
@@ -43,9 +43,11 @@ export default function StationsCard ({ station }) {
                                     <button className="btn btn-dark text-light p-0 me-2">
                                         <Link className="nav-link m-0 text-white" to={`/incidences/create/${station.id}`}>Incidences</Link>
                                     </button>
-                                    <button className="btn btn-dark p-2" onClick={click_rent()}>
-                                        {isRent ? "Leave bike" :  "Rent a bike"}
-                                    </button>
+                                        { station.slots.length > 0
+                                        ? <button className="btn btn-dark p-2" onClick={click_rent()}>
+                                                {isRent ? "Leave bike" :  "Rent a bike"}
+                                        </button>
+                                        : ""}
                                 </div>
                     }
                 </div>

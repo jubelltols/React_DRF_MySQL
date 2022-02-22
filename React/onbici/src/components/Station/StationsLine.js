@@ -2,14 +2,12 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Modal, Button } from 'react-bootstrap'
 
-import { useStations } from '../../hooks/useStations'
 
-export default function BikesLine ({ station, index }) {
+export default function BikesLine ({ station, index, deleteStation, changeStatusStation }) {
     const [show, setShow] = useState(false)
 
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
-    const { deleteStation, changeStatusStation } = useStations()
 
     const changeStatus = (id, status) => (e) => {
         e.stopPropagation()
@@ -59,8 +57,15 @@ export default function BikesLine ({ station, index }) {
                 <Modal.Header closeButton>
                     <Modal.Title>Slot {station.id}</Modal.Title>
                 </Modal.Header>
-                    <Modal.Body>
-                        <ul>
+                    <Modal.Body className='m-3'>
+                        {station.image != null ?
+                            <img className="bd-placeholder-img card-img-top" width="100%" height="250" src={"http://127.0.0.1:8000" + station.image} alt={station.name}/>
+                            :
+                            <svg className="bd-placeholder-img card-img-top" width="100%" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" alt={station.name} focusable="false">
+                                <rect width="100%" height="100%" fill="#55595c"></rect>
+                            </svg>
+                        } 
+                        <ul className='mt-3'>
                             <li><strong>Id station:</strong>  {station.name}</li>
                             <li><strong>Id bike:</strong>     {station.status}</li>
                             <li><strong>Latitude:</strong>      {station.latitude}</li>

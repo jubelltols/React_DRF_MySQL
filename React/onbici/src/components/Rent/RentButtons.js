@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useRent } from "../../hooks/useRent"
 
-export default function RentButtons ({ slot, index, click_rent }) {
+export default function RentButtons ({ slot, index, click_rent, setRentClick }) {
     const {rent, isRent, start_rent, end_rent} = useRent()
 
     const startRent = (slot) => (e) => {
@@ -12,6 +12,7 @@ export default function RentButtons ({ slot, index, click_rent }) {
             "bike": slot.bike.id
         }
         start_rent(JSON.stringify(data))
+        setRentClick(false)
         click_rent()
     }
 
@@ -21,22 +22,21 @@ export default function RentButtons ({ slot, index, click_rent }) {
             "end_slot": slot.id
         }
         end_rent(JSON.stringify(data), rent.id)
+        setRentClick(false)
         click_rent()
     }
 
     return (
-        <div className=''>
-            {isRent ?
-                <div>
-                    <p>Dejar bici</p>
-                    <button key={index} className="btn btn-primary p-2" disabled={slot.bike} onClick={endRent(slot)}>
+        <div className='m-2'>
+            {isRent ? 
+                <div /* className={slot.status === "disable" ? "d-none" : "m-3"} */>
+                    <button key={index} className="btn btn-primary" disabled={slot.bike} onClick={endRent(slot)}>
                         Bicycle {index+1}
                     </button>
                 </div>
                 :
-                <div>
-                    <p>Coger bici</p>
-                    <button key={index+1} className="btn btn-warning p-2" disabled={!slot.bike} onClick={startRent(slot)}>
+                <div /* className={slot.status === "disable" ? "d-none" : "m-3"} */>
+                    <button key={index+1} className="btn btn-warning" disabled={!slot.bike && slot.status !== "active"} onClick={startRent(slot)}>
                         Bicycle {index+1}
                     </button>
                 </div>
