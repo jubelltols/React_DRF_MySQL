@@ -31,7 +31,7 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [ '0.0.0.0', '127.0.0.1', 'localhost' ]
+ALLOWED_HOSTS = [ '0.0.0.0', '127.0.0.1', 'localhost', '1ada-88-21-180-135.eu.ngrok.io' ]
 
 
 # Application definition
@@ -56,7 +56,8 @@ INSTALLED_APPS = [
     'onbici.station',
     'onbici.slot',
     'onbici.rent',
-    'onbici.profile'
+    'onbici.profile',
+    'onbici.subscription'
 ]
 
 MIDDLEWARE = [
@@ -196,3 +197,7 @@ SIMPLE_JWT = {
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+STRIPE_PUBLIC_KEY = env('STRIPE_PUBLIC_KEY')
+STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY')
+STRIPE_WEBHOOK_SECRET= env('STRIPE_WEBHOOK_SECRET')

@@ -21,6 +21,8 @@ urlpatterns = [
     path('api/', include('onbici.rent.urls')),
     path('api/', include('onbici.slot.urls')),
     path('api/', include('onbici.station.urls')),
+    path('api/', include('onbici.subscription.urls')),
+    path('stripe/', include('onbici.stripe.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

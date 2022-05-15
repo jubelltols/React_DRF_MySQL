@@ -3,6 +3,11 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
+from onbici.profile.models import Profile
+from django.conf import settings
+
+import stripe
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
@@ -75,7 +80,6 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
 
 class UpdateUserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True)
-
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email')
@@ -98,6 +102,7 @@ class UpdateUserSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         user = self.context['request'].user
+        profile = Profile.objects.get(user_id=user.id)
 
         if user.pk != instance.pk:
             raise serializers.ValidationError({"authorize": "You dont have permission for this user."})
@@ -106,6 +111,11 @@ class UpdateUserSerializer(serializers.ModelSerializer):
         instance.last_name = validated_data['last_name']
         instance.email = validated_data['email']
         instance.username = validated_data['username']
+
+        """ stripe.Customer.modify(
+            profile.stripe_customer_id,
+            email=validated_data['email']
+        ) """
 
         instance.save()
 

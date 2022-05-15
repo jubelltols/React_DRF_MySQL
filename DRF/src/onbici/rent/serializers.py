@@ -27,7 +27,7 @@ class RentSerializer(serializers.ModelSerializer):
         except Slot.DoesNotExist:
             raise serializers.ValidationError({'error': 'Please enter a valid slot.'})
         
-        rent = Rent.objects.create(bike = slot. bike, user = user, start_slot = slot)
+        rent = Rent.objects.create(bike = slot.bike, user = user, start_slot = slot)
         Slot.objects.filter(id=self.context['start_slot']).update(bike = None)
         return rent
 

@@ -12,7 +12,8 @@ class Profile(TimestampedModel):
     # are formalizing this relationship. Every user will have one -- and only
     # one -- related Profile model.
     user = models.OneToOneField( User, on_delete=models.CASCADE )
-    print(user)
+    stripe_customer_id = models.CharField(max_length=50, null=True)
+
     # Each user profile will have a field where they can tell other users
     # something about themselves. This field will be empty when the user
     # creates their account, so we specify `blank=True`.

@@ -6,6 +6,7 @@ class Rates(models.Model):
     slug = models.SlugField(max_length=100,unique=True)
     description = models.TextField(blank=True,default="")
     price = models.IntegerField(null=True, blank=True)
+    stripe_price_id = models.CharField(max_length=50, null=True)
     status = models.CharField(max_length=500)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True,db_index=True)
