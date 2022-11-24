@@ -1,14 +1,12 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { useStations } from '../../hooks/useStations'
 
-export default function BikesLine ({ station, index }) {
+export default function BikesLine ({ station, index, deleteStation, changeStatusStation }) {
     const [show, setShow] = useState(false)
 
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
-    const { deleteStation, changeStatusStation } = useStations()
 
     const changeStatus = (id, status) => (e) => {
         e.stopPropagation()

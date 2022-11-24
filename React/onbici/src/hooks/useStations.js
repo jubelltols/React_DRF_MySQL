@@ -5,7 +5,6 @@ import StationsService from '../services/StationsService'
 export function useStations () {
     const [loading, setLoading] = useState(false)
     const {stations, setStations} = useContext(StationsContext)
-   /*  const [stations, setStations] = useState(null) */
     const [isCorrect, setIsCorrect] = useState(false)
 
     useEffect(function () {
@@ -47,7 +46,6 @@ export function useStations () {
     },[])
 
     const updateStation = useCallback((id, data) =>{
-
         let formData = new FormData(); 
 
         formData.append('name', data.name);   

@@ -3,7 +3,7 @@ import React from 'react'
 import { useRent } from "../../hooks/useRent"
 import { useTranslation } from "react-i18next";
 
-export default function RentButtons ({ slot, index, click_rent }) {
+export default function RentButtons ({ slot, index, click_rent, setRentClick }) {
     const {rent, isRent, start_rent, end_rent} = useRent()
     const { t } = useTranslation("global");
 

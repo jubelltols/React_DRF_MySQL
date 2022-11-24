@@ -32,7 +32,6 @@ export default function GoogleMaps({stations, onlyMap}) {
 
   return (
     <div>
-      
         <GoogleMap
           id="map"
           mapContainerStyle={mapContainerStyle}
@@ -42,7 +41,8 @@ export default function GoogleMaps({stations, onlyMap}) {
           onLoad={onMapLoad}
         >
           {stations.map((marker) => (
-            <Marker
+            marker.status === "active" 
+            ? <Marker
               key={`${marker.latitude}-${marker.longitude}`}
               position={{ lat: Number(marker.latitude), lng: Number(marker.longitude) }}
               onClick={() => {setSelected(marker);}}
@@ -55,6 +55,7 @@ export default function GoogleMaps({stations, onlyMap}) {
                 scale: 0.07
               }}
             />
+            : ""
           ))}
           {selected ? (
             <InfoWindow 

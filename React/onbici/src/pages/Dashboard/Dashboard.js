@@ -9,7 +9,6 @@ export default function Home() {
     const { data } = useDashboard()
     
     return (
-
         data.length === 0 ? <SpinnerLoading />
         : <section className="bg-base-content">
             <div className="grid grid-cols-3 gap-4 p-20">

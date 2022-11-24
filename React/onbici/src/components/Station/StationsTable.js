@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import StationsLine from './StationsLine'
 
-export default function StationsTable ({ stations }) {
+export default function StationsTable ({ stations, deleteStation, changeStatusStation }) {
 
     return  (
         <section className="min-h-screen bg-base-content">

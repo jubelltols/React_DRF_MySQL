@@ -12,6 +12,7 @@ export default function SlotLine ({ slot, deleteSlot, changeStatusSlot }) {
     }
 
     return (
+
         <>
             <tr>
                 <td>{slot.id}</td>

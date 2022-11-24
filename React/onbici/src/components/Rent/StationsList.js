@@ -10,7 +10,9 @@ export default function StationsList ({ stations }) {
                 <div className="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
                     {
                         stations.map(( station, index ) => (
-                            <StationsCard key={index} station={station}/>
+                            station.status === "active" 
+                            ? <StationsCard key={index} station={station}/>
+                            : ""
                         ))
                     }
                 </div>

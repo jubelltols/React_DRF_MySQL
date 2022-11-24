@@ -14,6 +14,7 @@ export default function SlotUpdate() {
     const { id } = useParams();
 
     return (
+
         <section className="min-h-screen bg-gray-900">
             <div className="flex flex-col items-center justify-center max-w-5xl mx-auto lg:py-16 px-6 py-8">
                 <div className="grid grid-cols-3 mb-3 self-start">
