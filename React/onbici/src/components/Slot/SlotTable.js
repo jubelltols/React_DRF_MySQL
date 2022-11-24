@@ -1,43 +1,42 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Card, Row, Col } from 'react-bootstrap'
 
 import SlotLine from './SlotLine'
 
 export default function SlotTable ({ slot, deleteSlot, changeStatusSlot }) {
 
     return  (
-        <div className='table-responsive d-flex' style={{backgroundColor: '#e8e8e8'}}>
-        <Card className="shadow p-3 mb-5 bg-body rounded m-5">
-            <Card.Body className='m-2'>
-                <Row className='mb-2'>
-                    <Col xs={9}  className="d-flex justify-content-start">
-                        <Card.Title>Slots</Card.Title>
-                    </Col>
-                    <Col xs={3} className="d-flex justify-content-end">
-                        <Link to="/slot/create" className="btn btn-dark">Create Slots</Link>
-                    </Col>
-                </Row>
-                <table className="table table-striped table-sm">
-                    <thead>
-                        <tr>
-                            <th scope="col">id</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Created At</th>
-                            <th scope="col">Modified At</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            slot.map(( slot, index ) => (
-                                <SlotLine key={index} slot={slot} deleteSlot={deleteSlot} changeStatusSlot={changeStatusSlot}/>
-                            ))
-                        }
-                    </tbody>
-                </table>
-            </Card.Body>
-        </Card>
-        </div>
+        <section className="min-h-screen base-content bg-base-content">
+            <div className="max-w-5xl px-4 py-8 mx-auto lg:py-16">
+                <div className="grid grid-cols-3 mb-3">
+                    <div className="col-span-2">
+                        <p className="mb-4 text-4xl font-bold text-base-100">Slots</p>
+                    </div>
+                    <div className="text-right">
+                        <Link to="/slot/create" className="btn btn-primary rounded-md font-bold">Create Slots</Link>
+                    </div>
+                </div>
+                <div className="overflow-x-auto">
+                    <table className="table table-zebra w-full">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Actions</th>
+                                <th>Status</th>
+                                <th>Created At</th>
+                                <th>Modified At</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                slot.map(( slot, index ) => (
+                                    <SlotLine key={index} slot={slot} deleteSlot={deleteSlot} changeStatusSlot={changeStatusSlot}/>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
     )
 }

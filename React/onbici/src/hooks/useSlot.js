@@ -22,14 +22,12 @@ export function useSlot () {
         SlotService.getSlot(id)
         .then(({data}) => {
             if(data){
-                console.log("----------------");
                 setSlot(data)
             }
         })
     },[])
 
     const createSlot = useCallback((data) =>{
-        console.log(data);
         SlotService.createSlot(data)
         .then(({data}) => {
             if(data){
@@ -54,7 +52,7 @@ export function useSlot () {
                 setSlot(
                     slot.map(function (slot) {
                         if(slot.id === id){
-                            slot.status = slot.status === "active" ? "disabñe" : "active"
+                            slot.status = slot.status === "active" ? "disable" : "active"
                         }
                         return slot; 
                     })

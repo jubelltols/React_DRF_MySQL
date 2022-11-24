@@ -1,9 +1,17 @@
-import React  from "react";
+import React, { useContext }  from "react";
+import { Link } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
+import AuthContext from '../../context/AuthContext'
+import Dashboard from '../Dashboard/Dashboard'
+import Rent from '../Rent/Rent'
+import Checkout from "../Checkout/Checkout";
+import Homepage from "../Home/Homepage";
 
 export default function Home() {
+    const { t } = useTranslation("global");
+    const { isAdmin, user, subscription } = useContext(AuthContext);
+
     return (
-        <div>
-            <img className="w-100" src="https://www.barcelona.de/images/miet-fahrrad/480-mietfahrraeder.jpg" alt="rent a bike"/>
-        </div>
+        isAdmin ? <Dashboard/> : (user && subscription?.status === "active" ? <Rent/> : (user ? <Checkout/> : <Homepage/>))
     )
 }

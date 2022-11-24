@@ -26,9 +26,6 @@ class StripeWebhook(APIView):
             data = event['data']
         except Exception as e:
             print(e)
-            
-        """ event_type = event['type']
-        data_object = data['object'] """
 
         if event['type'] == 'customer.subscription.created':
 
@@ -74,7 +71,7 @@ class StripeWebhook(APIView):
 
             tz = pytz.timezone("CET")
 
-            subscription = Subscription.objects.get(stripe_subscription_id = data.object.id, status="active")
+            subscription = Subscription.objects.get(stripe_subscription_id = data.object.id)
             data = {
                 'stripe_subscription_id': data.object.id,
                 'stripe_price_id': data.object.plan.id,
@@ -93,6 +90,27 @@ class StripeWebhook(APIView):
                 return Response(data.data)
             else:
                 return Response(status=status.HTTP_404_NOT_FOUND)
+
+        if event['type'] == 'payment_intent.succeeded':
+            print('💰 Payment received!')
+
+        elif event['type'] == 'payment_intent.payment_failed':
+            print('❌ Payment failed.')
+
+        if event['type'] == 'invoice.payment_succeeded':
+            
+            if data['object']['billing_reason'] == 'subscription_create':
+                subscription_id = data['object']['subscription']
+                payment_intent_id = data['object']['payment_intent']
+
+                # Retrieve the payment intent used to pay the subscription
+                payment_intent = stripe.PaymentIntent.retrieve(payment_intent_id)
+
+                # Set the default payment method
+                stripe.Subscription.modify(
+                    subscription_id,
+                    default_payment_method=payment_intent.payment_method
+                )
 
         return HttpResponse()
 

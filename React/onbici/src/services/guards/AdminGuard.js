@@ -1,11 +1,12 @@
-import React from 'react'
-import { Navigate } from "react-router-dom"
+import React, { useContext } from 'react'
+import { Navigate, Outlet } from "react-router-dom"
 
-import { useAuth } from "../../hooks/useAuth"
+import AuthContext from "../../context/AuthContext"
 
-function AdminGuard({children}) {
-    const { isAdmin } = useAuth()
-    return isAdmin ? children : <Navigate to="/signin"/>
+function AdminGuard() {
+    const { isAdmin } = useContext(AuthContext)
+
+    return isAdmin ? <Outlet /> : <Navigate to="/signin"/>
 }
 
 export default AdminGuard;

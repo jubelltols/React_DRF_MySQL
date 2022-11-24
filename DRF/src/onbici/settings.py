@@ -31,8 +31,10 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [ '0.0.0.0', '127.0.0.1', 'localhost', '1ada-88-21-180-135.eu.ngrok.io' ]
+ALLOWED_HOSTS = [ '0.0.0.0', '127.0.0.1', '192.168.1.72', 'localhost', '224b-88-21-181-68.eu.ngrok.io' ]
+# ALLOWED_HOSTS = [ '*' ]
 
+# CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
@@ -58,6 +60,8 @@ INSTALLED_APPS = [
     'onbici.rent',
     'onbici.profile',
     'onbici.subscription'
+    #,
+    #'whitenoise.runserver_nostatic' 
 ]
 
 MIDDLEWARE = [
@@ -68,7 +72,9 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
+    #,
+    #'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
 ROOT_URLCONF = 'onbici.urls'
@@ -109,8 +115,21 @@ DATABASES = {
     }
 }
 
-
-
+""" DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': env('DATABASES_NAME'),
+        'USER': env('DATABASES_USER'),
+        'PASSWORD': env('DATABASES_PASSWORD'),
+        'HOST': env('DATABASES_HOST'),
+        'PORT': env('DATABASES_PORT'),
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+            'ssl': {'ssl-ca': env('MYSQL_ATTR_SSL_CA')}
+        }
+    }
+}
+"""
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
@@ -200,4 +219,15 @@ MEDIA_URL = '/media/'
 
 STRIPE_PUBLIC_KEY = env('STRIPE_PUBLIC_KEY')
 STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY')
-STRIPE_WEBHOOK_SECRET= env('STRIPE_WEBHOOK_SECRET')
+STRIPE_WEBHOOK_SECRET = env('STRIPE_WEBHOOK_SECRET')
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
+STATIC_TMP = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/statič/'
+
+os.makedirs(STATIC_TMP, exist_ok=True)
+os.makedirs(STATIC_ROOT, exist_ok=True)
+
+STATICFILES_DIRS = ( os.path.join(BASE_DIR, 'static'),)
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

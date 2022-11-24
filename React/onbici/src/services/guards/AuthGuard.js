@@ -1,11 +1,13 @@
-import React from 'react'
-import { Navigate } from "react-router-dom"
+import React, { useContext } from 'react'
+import { Navigate, Outlet, useLocation } from "react-router-dom"
 
-import { useAuth } from "../../hooks/useAuth"
+import AuthContext from "../../context/AuthContext"
+import SpinnerLoading from "../../components/Spinner/SpinnerLoading"
 
-function AuthGuard({children}) {
-    const { isLogged } = useAuth()
-    return isLogged ? children : <Navigate to="/signin"/>
+function AuthGuard() {
+    const { user, isLoading } = useContext(AuthContext) 
+
+    return isLoading ? <SpinnerLoading /> : (user ? <Outlet/> : <Navigate to="/signin"/>)
 }
 
 export default AuthGuard;

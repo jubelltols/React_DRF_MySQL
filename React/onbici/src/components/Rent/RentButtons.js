@@ -1,9 +1,11 @@
 import React from 'react'
 
 import { useRent } from "../../hooks/useRent"
+import { useTranslation } from "react-i18next";
 
 export default function RentButtons ({ slot, index, click_rent }) {
     const {rent, isRent, start_rent, end_rent} = useRent()
+    const { t } = useTranslation("global");
 
     const startRent = (slot) => (e) => {
         e.stopPropagation();
@@ -12,7 +14,6 @@ export default function RentButtons ({ slot, index, click_rent }) {
             "bike": slot.bike.id
         }
         start_rent(JSON.stringify(data))
-        click_rent()
     }
 
     const endRent = (slot) => (e) => {
@@ -21,26 +22,19 @@ export default function RentButtons ({ slot, index, click_rent }) {
             "end_slot": slot.id
         }
         end_rent(JSON.stringify(data), rent.id)
-        click_rent()
     }
 
     return (
-        <div className=''>
+        <>
             {isRent ?
-                <div>
-                    <p>Dejar bici</p>
-                    <button key={index} className="btn btn-primary p-2" disabled={slot.bike} onClick={endRent(slot)}>
-                        Bicycle {index+1}
-                    </button>
-                </div>
+                <button key={index} className="btn btn-primary p-2" disabled={slot.bike} onClick={endRent(slot)}>
+                    {t("bike")} {index+1}
+                </button>
                 :
-                <div>
-                    <p>Coger bici</p>
-                    <button key={index+1} className="btn btn-warning p-2" disabled={!slot.bike} onClick={startRent(slot)}>
-                        Bicycle {index+1}
-                    </button>
-                </div>
+                <button key={index+1} className="btn btn-warning p-2" disabled={!slot.bike} onClick={startRent(slot)}>
+                    {t("bike")} {index+1}
+                </button>
             }
-        </div>
+        </>
     )
 }

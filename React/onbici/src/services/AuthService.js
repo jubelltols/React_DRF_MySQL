@@ -5,7 +5,6 @@ const AuthService = {
         return http().post("/api/login/", data)
     },
     signup(data) {
-        console.log(data);
         return http().post(`/api/register/`, data)
     },
     getUser(data) {

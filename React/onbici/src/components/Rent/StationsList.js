@@ -5,9 +5,9 @@ import StationsCard from './StationsCard'
 export default function StationsList ({ stations }) {
 
     return  (
-        <div className="album py-5 bg-light">
-            <div className="container">
-                <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <section className="bg-base-content">
+            <div className="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+                <div className="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
                     {
                         stations.map(( station, index ) => (
                             <StationsCard key={index} station={station}/>
@@ -15,6 +15,6 @@ export default function StationsList ({ stations }) {
                     }
                 </div>
             </div>
-        </div>
+        </section>
     )
 }

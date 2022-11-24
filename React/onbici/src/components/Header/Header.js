@@ -1,103 +1,121 @@
 import React, { useContext, useEffect } from "react"
 import { Link } from 'react-router-dom'
-import { Navbar, Nav, Dropdown, Button, Row, Col, Container } from 'react-bootstrap'
 
-import AuthContext from "../../context/AuthContext"
 import { useAuth } from '../../hooks/useAuth'
 import NotificationContext from "../../context/NotificationContext"
+import { useTranslation } from "react-i18next";
 
 export default function Header () {
-    const { user } = useContext(AuthContext)
-    const { isLogged, logout, isAdmin } = useAuth()
+    const { t } = useTranslation("global");
+    const { user, logout, isAdmin } = useAuth();
     const { newNotification, setRefreshNotifications } = useContext(NotificationContext)
 
     useEffect(function () {
         setRefreshNotifications(true)
-    }, [])
-
-    console.log(isAdmin)
+    }, [setRefreshNotifications])
 
     return (
-        <Navbar bg="dark" expand="lg">
-            <Container>
-                <Navbar.Brand><Link to="/" className="nav-link ms-2 px-2 text-white">ONBICI</Link></Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
-                    {isLogged 
-                    ? 
-                    user && (
+        <div className="navbar bg-base-100">
+            <div className="navbar-start">
+                <div className="dropdown">
+                    <label tabIndex={0} className="btn btn-ghost lg:hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+                    </label>
+                        {
+                            user ? (
+                                isAdmin ? 
+                                <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+                                    <li><Link to="/dashboard">{t("dashboard")}</Link></li>
+                                    <li><Link to="/slot">{t("slot")}</Link></li>
+                                    <li><Link to="/stations">{t("stations")}</Link></li>
+                                    <li><Link to="/bikes">{t("bike")}</Link></li>
+                                    <li><Link to="/incidences">{t("incidences")}</Link></li>
+                                </ul>
+                                : 
+                                <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+                                    
+                                </ul>
+                            ) : 
+                            <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+                                    <li><Link to="/rates">{t("rates")}</Link></li>
+                                    <li><Link to="/map">{t("map")}</Link></li>
+                                    <li><Link to="/how-its-work" >{t("how_its_work")}</Link></li>
+                            </ul>
+                        }
+                </div>
+                <Link to={user ? (isAdmin ? "/dashboard" : "/rent") : "/"}>
+                    <img src="http://127.0.0.1:8000/media/svg/logo.png"  alt="totem" height="90" width="125" />
+                </Link>
+            </div>
+            <div className="navbar-center hidden lg:flex">
+                {
+                    user ? (
                         isAdmin ? 
-                        <Nav className="me-auto">
-                            <Nav><Link to="/rent" className="nav-link ms-2 px-2 text-white">Rent</Link></Nav>
-                            <Nav><Link to="/dashboard" className="nav-link ms-2 px-2 text-white">Dashboard</Link></Nav>
-                            <Nav><Link to="/slot" className="nav-link ms-2 px-2 text-white">Slot</Link></Nav>
-                            <Nav><Link to="/stations" className="nav-link ms-2 px-2 text-white">Stations</Link></Nav>
-                            <Nav><Link to="/bikes" className="nav-link ms-2 px-2 text-white">Bike</Link></Nav>
-                            <Nav><Link to="/incidences" className="nav-link ms-2 px-2 text-white">Incidences</Link></Nav>
-                        </Nav>
+                        <ul tabIndex={0} className="menu menu-horizontal p-0">
+                            <li><Link to="/dashboard">{t("dashboard")}</Link></li>
+                            <li><Link to="/slot">{t("slot")}</Link></li>
+                            <li><Link to="/stations">{t("stations")}</Link></li>
+                            <li><Link to="/bikes">{t("bike")}</Link></li>
+                            <li><Link to="/incidences">{t("incidences")}</Link></li>
+                        </ul>
                         : 
-                        <Nav className="me-auto">
-                            <Nav><Link to="/rent" className="nav-link ms-2 px-2 text-white">Rent</Link></Nav>
-                        </Nav>
-                    ):""}
-                </Navbar.Collapse>
-                <Navbar.Collapse className="justify-content-end">
-                    {isLogged 
-                    ? 
-                    user && (
-                        <Row>
-                            <Col className="d-flex justify-content-end">
-                            <Dropdown drop="start">
-                                <Dropdown.Toggle  className="btn btn-dark" id="dropdown-basic">
-                                
-                                {newNotification.length > 0 ?
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                        {newNotification.length}
-                                    </span>
-                                    : ""}
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-bell" viewBox="0 0 16 16">
-                                        <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
-                                    </svg>
-                                </Dropdown.Toggle>
-
-                                <Dropdown.Menu>
-                                {
-                                    newNotification.length > 0 ?
-                                    <>
-                                        {newNotification.map(( not, index ) => (
-                                            <Dropdown.Item>{not.title}</Dropdown.Item>
-                                        ))}
-                                        <Dropdown.Divider />
-                                        <Dropdown.Item><Link className="dropdown-item" to="/notification">View notification</Link></Dropdown.Item>
-                                    </>
-                                    : <Dropdown.Item><Link className="dropdown-item" to="/notification">View notification</Link></Dropdown.Item>
-                                }
-                                </Dropdown.Menu>
-                            </Dropdown>
-                            </Col>
-                            <Col>
-                                <Dropdown>
-                                        <Dropdown.Toggle  className="d-flex flex-row align-items-center" variant="dark" id="dropdown-basic">
-                                                <img src={user.image} alt="profileimage" width="35" height="35" className="rounded-circle bg-secondary"></img>
-                                                <p className="align-middle ms-2 m-1">{user.username}</p>
-                                        </Dropdown.Toggle>
-
-                                        <Dropdown.Menu>
-                                            <Dropdown.Item><Link className="dropdown-item" to="/profile">Profile</Link></Dropdown.Item>
-                                            <Dropdown.Item><button className="dropdown-item"  onClick={logout}>Logout</button></Dropdown.Item>
-                                        </Dropdown.Menu>
-                                </Dropdown>
-                            </Col>
-                        </Row>
+                        <ul tabIndex={0} className="menu menu-horizontal p-0">
+                            
+                        </ul>
+                    ) : 
+                    <ul tabIndex={0} className="menu menu-horizontal p-0">
+                            <li><Link to="/rates">{t("rates")}</Link></li>
+                            <li><Link to="/map">{t("map")}</Link></li>
+                            <li><Link to="/how-its-work" >{t("how_its_work")}</Link></li>
+                    </ul>
+                }
+            </div>
+            <div className="navbar-end">
+                {user ? (
+                    <>
+                        {/* {isAdmin ?
+                            <div className="dropdown dropdown-open">
+                                <label tabIndex={0} className="btn btn-ghost btn-circle">
+                                    <div className="indicator">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
+                                        <span className="badge badge-xs badge-primary indicator-item"></span>
+                                    </div>
+                                </label>
+                                <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                                        {newNotification.length > 0 ?
+                                        <>
+                                            {newNotification.map(( not, index ) => (
+                                                <li>{not.title}</li>
+                                            ))}
+                                            <li><Link className="dropdown-item" to="/notification">{t("view_notification")}</Link></li>
+                                        </>
+                                        : <>
+                                            <li><p>{t("no_notifications")}</p></li>
+                                            <li><Link className="dropdown-item" to="/notification">{t("view_notification")}</Link></li>
+                                        </>}
+                                </ul>
+                            </div>
+                        : ""} */}
+                        <div className="dropdown dropdown-end">
+                            <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                                <div className="w-10 rounded-full">
+                                    <img src={user.image} alt="profileimage" width="35" height="35" className="rounded-circle bg-secondary"></img>
+                                </div>
+                            </label>
+                            <ul tabIndex={0} className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
+                                <li><Link className="dropdown-item" to="/profile">{t("profile")}</Link></li>
+                                <li><button className="dropdown-item" onClick={logout}>{t("logout")}</button></li>
+                            </ul>
+                        </div>
+                    </>
                     )
-                    : 
+                    : (
                     <div>
-                        <Button variant="outline-light me-2"><Link to="/signin" className="text-decoration-none text-light">Sign In</Link></Button>
-                        <Button variant="light"><Link to="/signup" className="text-decoration-none text-dark">Sign Up</Link></Button>
+                        <button className="btn btn-sm btn-outline m-1"><Link to="/signin" className="text-decoration-none text-light">{t("signin")}</Link></button>
+                        <button className="btn btn-sm m-1"><Link to="/signup" className="text-decoration-none text-dark">{t("signup")}</Link></button>
                     </div>
-                    }
-                </Navbar.Collapse>
-            </Container>
-        </Navbar>
+                    )}
+            </div>
+        </div>
     )
 }

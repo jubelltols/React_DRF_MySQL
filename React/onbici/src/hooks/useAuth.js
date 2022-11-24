@@ -1,15 +1,15 @@
-import {useCallback, useContext, useState} from 'react'
-import { useNavigate } from "react-router-dom"
+import {useCallback, useContext, useEffect, useState} from 'react';
+import { useNavigate } from "react-router-dom";
 
-import AuthContext from '../context/AuthContext'
-import AuthService from '../services/AuthService'
-import JWTService from '../services/JWTService'
+import AuthContext from '../context/AuthContext';
+import AuthService from '../services/AuthService';
+import JWTService from '../services/JWTService';
 
 export function useAuth () {
     const navigate = useNavigate();
-    const { user, setUser, jwt, setJWT, isAdmin, setIsAdmin } = useContext(AuthContext)
-    const [status, setStatus] = useState({loading: false, serror: false})
-    
+    const { user, setUser, subscription, setSubscription, isAdmin, setIsAdmin, checkAdmin, jwt, setJWT } = useContext(AuthContext)
+    const [ status, setStatus ] = useState({loading: false, error: false})
+
     const signup = useCallback((data) => {
         setStatus({ loading: true, error: false });
         AuthService.signup(data) 
@@ -57,18 +57,13 @@ export function useAuth () {
         });
     },[navigate]);
 
-    const isLogged = () => {
-        if (JWTService.getToken() && user) {
-            return true;
-        }
-        return false
-    }
-
     const logout = useCallback(() => {
         JWTService.destroyToken()
         setUser(null)
         setJWT(null)
-    }, [setJWT, setUser])
+        navigate("/")
+    }, [setJWT, setUser, navigate])
 
-    return {jwt, user, isAdmin, setIsAdmin, status, signin, signup, changePassword, updateUser, logout, isLogged: isLogged()}
+    return { user, setUser, subscription, setSubscription, isAdmin, setIsAdmin, checkAdmin, jwt, setJWT, 
+            status, signin, signup, changePassword, updateUser, logout }
 }

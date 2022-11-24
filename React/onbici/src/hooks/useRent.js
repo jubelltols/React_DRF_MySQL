@@ -2,12 +2,14 @@ import {useContext, useEffect, useState,useCallback} from 'react'
 
 import RentContext from "../context/RentContext"
 import RentService from '../services/RentService'
+import { useToast } from './useToast';
 
 export function useRent(){
     const [loading, setLoading] = useState(false)
     const {rent, setRent} = useContext(RentContext)
     const [isDashboard, setIsDashboard] = useState(false)
-
+    const { addToast } = useToast();
+    
     useEffect(function () {
         RentService.getRent()
         .then(({data}) => {
@@ -19,22 +21,24 @@ export function useRent(){
     const start_rent = useCallback((rent) =>{
         RentService.startRent(rent)
         .then(({data}) =>{
-            console.log(data)
             setRent(data)
-            console.log(rent)
+            addToast("start_rent", 200, "alert alert-success shadow-lg", "text-base-content", "success");
+        }).catch(({error}) =>{
+            addToast("start_rent_end", 200, "alert alert-error shadow-lg", "text-base-content", "error");
+            setRent([])
         })
-    },[setRent])
+    },[setRent, addToast])
 
     const end_rent = useCallback((rent, id) =>{
         RentService.endRent(rent, id)
         .then(({data}) =>{
-            console.log(data);
             setRent([])
+            addToast("end_rent", 200, "alert alert-success shadow-lg", "text-base-content", "success");
         }).catch(({error}) =>{
-            console.log(error);
+            addToast("end_rent_error", 200, "alert alert-error shadow-lg", "text-base-content", "error");
             setRent([])
         })
-    },[setRent])
+    },[setRent, addToast])
 
     const isRent = () =>{
         if (rent.length === 0) {

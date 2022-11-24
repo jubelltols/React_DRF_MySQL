@@ -21,7 +21,6 @@ export function useStations () {
         StationsService.getStation(id)
         .then(({data}) => {
             if(data){
-                console.log("----------------");
                 setStations(data)
             }
         })
@@ -48,8 +47,6 @@ export function useStations () {
     },[])
 
     const updateStation = useCallback((id, data) =>{
-        console.log(id)
-        console.log(data)
 
         let formData = new FormData(); 
 
@@ -71,16 +68,13 @@ export function useStations () {
     },[])
 
     const changeStatusStation = ((id, data) =>{
-        console.log(id)
-        console.log(data)
-        
         StationsService.updateStation(id, data)
         .then(({data}) => {
             if(data){
                 setStations(
                     stations.map(function (station) {
                         if(station.id === id){
-                            station.status = station.status === "active" ? "disabñe" : "active"
+                            station.status = station.status === "active" ? "disable" : "active"
                         }
                         return station; 
                     })
@@ -89,12 +83,10 @@ export function useStations () {
         })
     })
 
-    const deleteStation = useCallback((id) =>{
+    const deleteStation = ((id) =>{
         StationsService.deleteStation(id)
-        .then(({data}) => {
-            setIsCorrect(true)
-        })
-    },[])
+        setStations(stations.filter(station => station.id !== id))
+    })
 
     return {loading, stations, createStation, getStations, updateStation, changeStatusStation, deleteStation, isCorrect}
 }

@@ -11,7 +11,6 @@ export default function Notifivation() {
         changeStatusNotifications()
     }, [])
 
-    console.log(notification);
     return (
         <div className="list-group m-5">
             {notification.map((not, index) => (

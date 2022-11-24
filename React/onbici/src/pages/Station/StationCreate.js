@@ -16,49 +16,52 @@ export default function StationCreate() {
     }, [isCorrect, navigate]);
 
     return (
-        <div className="d-flex justify-content-center m-5">
-            <div className="col-sm-8 col-md-8 col-lg-8">
-                <h1 className="mb-3 text-black">Create Station</h1>
-                <form className="needs-validation" onSubmit={handleSubmit(createStation)}>
-                <div className="row g-3">
-                        <div className="col-sm-12">
-                            <label htmlFor="name" className="form-label">Name</label>
-                            <input className="form-control" type="text" placeholder="Name" {...register("name", {required: true, maxLength: 80})} />
-                            {errors.name?.type === 'required' && <span className="text-danger">Name is required</span>}
-                            {errors.name && errors.name.type === "maxLength" && <span className="text-danger">Max length 80 characters</span> }
-                        </div>
-                        <div className="col-sm-12">
-                            <label htmlFor="status" className="form-label">Status</label>
-                            <select className="form-select" {...register("status", { required: true })}>
-                                <option value="active">active</option>
-                                <option value="disable">disable</option>
-                            </select>
-                            {errors.status?.type === 'required' && <span className="text-danger">Status is required</span>}
-                        </div>
-                        <div className="col-sm-12">
-                            <label htmlFor="image" className="form-label">Image</label>
-                            <input className="form-control" type="file" placeholder="Image" {...register("image", {required: true})} />
-                            {errors.image?.type === 'required' && <span className="text-danger">Image is required</span>}
-                        </div>
-                        <div className="col-sm-12">
-                            <label htmlFor="latitude" className="form-label">Latitude</label>
-                            <input className="form-control" type="latitude" placeholder="Latitude" {...register("latitude", {required: true})} />
-                            {errors.latitude?.type === 'required' && <span className="text-danger">Latitude is required</span>}
-                        </div>
-                        <div className="col-sm-12">
-                            <label htmlFor="longitude" className="form-label">Longitude</label>
-                            <input className="form-control" type="longitude" placeholder="Longitude" {...register("longitude", {required: true})} />
-                            {errors.longitude?.type === 'required' && <span className="text-danger">Longitude is required</span>}
-                        </div>
+        <section className="min-h-screen bg-base-content">
+            <div className="flex flex-col items-center justify-center max-w-5xl mx-auto lg:py-16 px-6 py-8">
+                <div className="grid grid-cols-3 mb-3 self-start">
+                    <div className="col-span-2">
+                        <p className="mb-4 text-4xl font-bold text-base-100">Create Station</p>
                     </div>
-
-                    <div className="row g-3 mt-1">
-                        <div className="col-12">
-                            <button className="w-100 btn btn-primary btn-lg" type="submit" control-id="ControlID-20">Create</button>    
-                        </div>
+                </div>
+                <div className="w-full bg-base-100 rounded-lg shadow">
+                    <div className="p-16 sm:p-10 space-y-4 md:space-y-6">
+                        <form className="space-y-4 md:space-y-6 needs-validation" onSubmit={handleSubmit(createStation)}>
+                            <div>
+                                <label htmlFor="name" className="block mb-2 text-sm font-medium">Name</label>
+                                <input className="border sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " type="text" placeholder="Name" {...register("name", {required: true, maxLength: 80})} />
+                                {errors.name?.type === 'required' && <span className="text-danger">Name is required</span>}
+                                {errors.name && errors.name.type === "maxLength" && <span className="text-danger">Max length 80 characters</span> }
+                            </div>
+                            <div>
+                                <label htmlFor="status" className="block mb-2 text-sm font-medium">Status</label>
+                                <select className='border sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ' {...register("status", { required: true })}>
+                                    <option value="active">active</option>
+                                    <option value="disable">disable</option>
+                                </select>
+                                {errors.status?.type === 'required' && <span>Status is required</span>}
+                            </div>
+                            <div>
+                                <label htmlFor="image" className="block mb-2 text-sm font-medium">Image</label>
+                                <input className="file-input file-input-bordered border sm:text-sm rounded-lg block w-full" type="file" placeholder="Image" {...register("image", {required: true})} />
+                                {errors.image?.type === 'required' && <span className="text-danger">Image is required</span>}
+                            </div>
+                            <div>
+                                <label htmlFor="latitude" className="block mb-2 text-sm font-medium">Latitude</label>
+                                <input className="border sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " type="latitude" placeholder="Latitude" {...register("latitude", {required: true})} />
+                                {errors.latitude?.type === 'required' && <span className="text-danger">Latitude is required</span>}
+                            </div>
+                            <div>
+                                <label htmlFor="longitude" className="block mb-2 text-sm font-medium">Longitude</label>
+                                <input className="border sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " type="longitude" placeholder="Longitude" {...register("longitude", {required: true})} />
+                                {errors.longitude?.type === 'required' && <span className="text-danger">Longitude is required</span>}
+                            </div>
+                            <p className="text-sm font-light pt-2">
+                                <button className="w-full font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary text-base-100" type="submit" control-id="ControlID-20">Create stations</button>    
+                            </p>
+                        </form>
                     </div>
-                </form>
-            </div>    
-        </div>
+                </div>
+            </div>
+        </section>
     );
 }

@@ -1,19 +1,25 @@
 import React, { Suspense } from 'react';
-import  'bootstrap/dist/css/bootstrap.min.css'; 
 import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { StationsContextProvider } from "./context/StationsContext";
 import { NotificationContextProvider } from "./context/NotificationContext";
 import { AuthContextProvider } from "./context/AuthContext";
 import { RentContextProvider } from "./context/RentContext";
-import Header from "./components/Header/Header"
-import SpinnerLoading from "./components/Spinner/SpinnerLoading"
-import AuthGuard from "./services/guards/AuthGuard"
-import AdminGuard from "./services/guards/AdminGuard"
+import { ToastContextProvider } from "./context/ToastContext";
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
+import SpinnerLoading from "./components/Spinner/SpinnerLoading";
+import AuthGuard from "./services/guards/AuthGuard";
+import AdminGuard from "./services/guards/AdminGuard";
+import AuthSubscriptionGuard from "./services/guards/AuthSubscriptionGuard";
+import ToastComponent from './components/Toast';
+import Layout from './components/Layout';
 
 function App() {
   const Home = React.lazy(() => import(  "./pages/Home/Home"))
+  const Rates = React.lazy(() => import(  "./pages/Rates/Rates"))
+  const CheckoutPage = React.lazy(() => import(  "./pages/Checkout/Checkout"))
   const Signin = React.lazy(() => import(  "./pages/User/Signin"))
   const Signup = React.lazy(() => import(  "./pages/User/Signup"))
   const Rent = React.lazy(() => import(  "./pages/Rent/Rent"))
@@ -32,43 +38,69 @@ function App() {
   const IncidencesUpdate = React.lazy(() => import(  './pages/Incidence/IncidencesUpdate'))
   const Notification = React.lazy(() => import(  './pages/User/Notification'))
   const Profile = React.lazy(() => import(  './pages/User/Profile'))
-  
+  const Map = React.lazy(() => import(  "./pages/Map/Map"))
+  const ChangeSubscription = React.lazy(() => import(  "./pages/Checkout/ChangeSubscription"))
+  const NotFound = React.lazy(() => import(  "./pages/NotFound/NotFound"))
+
   return (    
     <BrowserRouter>
+    <ToastContextProvider>
       <AuthContextProvider>
         <NotificationContextProvider>
           <Header />
           <RentContextProvider>
             <StationsContextProvider>
               <Routes>
-                <Route path="/" element={<Suspense fallback={<SpinnerLoading/>}><Home/></Suspense>} />
-                <Route path="/signin" element={<Suspense fallback={<SpinnerLoading/>}><Signin/></Suspense>} />
-                <Route path="/signup" element={<Suspense fallback={<SpinnerLoading/>}><Signup/></Suspense>} />
+                <Route path="/" element={<Layout />}>
+                  
+                  <Route path="/" element={<Suspense fallback={<SpinnerLoading/>}>
+                    <Home/>
+                  </Suspense>} /> 
+                  
+                  <Route path="rates" element={<Suspense fallback={<SpinnerLoading/>}><Rates/></Suspense>} />                 
+                  <Route path="map" element={<Suspense fallback={<SpinnerLoading/>}><Map/></Suspense>} />    
 
-                <Route path="/rent" element={<Suspense fallback={<SpinnerLoading/>}><><Rent/></></Suspense>} />
-                <Route path="/profile" element={<Suspense fallback={<SpinnerLoading/>}><AuthGuard><Profile/></AuthGuard></Suspense>} />
+                  <Route path="signin" element={<Suspense fallback={<SpinnerLoading/>}><Signin/></Suspense>} />
+                  <Route path="signup" element={<Suspense fallback={<SpinnerLoading/>}><Signup/></Suspense>} />
 
-                <Route path="/dashboard" element={<Suspense fallback={<SpinnerLoading/>}><Dashboard/></Suspense>} />
-                <Route path="/stations" element={<Suspense fallback={<SpinnerLoading/>}><AdminGuard><Stations/></AdminGuard></Suspense>} />
-                <Route path="/station/create" element={<Suspense fallback={<SpinnerLoading/>}><AuthGuard><StationsCreate/></AuthGuard></Suspense>} />
-                <Route path="/station/edit/:id" element={<Suspense fallback={<SpinnerLoading/>}><AuthGuard><StationsUpdate/></AuthGuard></Suspense>} />
-                <Route path="/slot" element={<Suspense fallback={<SpinnerLoading/>}><AuthGuard><Slot/></AuthGuard></Suspense>} />
-                <Route path="/slot/create" element={<Suspense fallback={<SpinnerLoading/>}><AuthGuard><SlotCreate/></AuthGuard></Suspense>} />
-                <Route path="/slot/edit/:id" element={<Suspense fallback={<SpinnerLoading/>}><AuthGuard><SlotUpdate/></AuthGuard></Suspense>} />
-                <Route path="/bikes" element={<Suspense fallback={<SpinnerLoading/>}><AuthGuard><Bikes/></AuthGuard></Suspense>} />
-                <Route path="/bike/create" element={<Suspense fallback={<SpinnerLoading/>}><AuthGuard><BikesCreate/></AuthGuard></Suspense>} />
-                <Route path="/bike/edit/:id" element={<Suspense fallback={<SpinnerLoading/>}><AuthGuard><BikesUpdate/></AuthGuard></Suspense>} />
-                <Route path="/incidences" element={<Suspense fallback={<SpinnerLoading/>}><AuthGuard><Incidences/></AuthGuard></Suspense>} />
-                <Route path="/incidences/create/:id" element={<Suspense fallback={<SpinnerLoading/>}><AuthGuard><IncidencesCreate/></AuthGuard></Suspense>} />
-                <Route path="/incidences/edit/:id" element={<Suspense fallback={<SpinnerLoading/>}><AuthGuard><IncidencesUpdate/></AuthGuard></Suspense>} />
-                <Route path="/notification" element={<Suspense fallback={<SpinnerLoading/>}><AuthGuard><Notification/></AuthGuard></Suspense>} />
-                <Route path="*" element={<Suspense fallback={<SpinnerLoading/>}><><Home/></></Suspense>} />
+                  <Route element={<AuthGuard />}> 
+                    <Route path="checkout" element={<Suspense fallback={<SpinnerLoading/>}><CheckoutPage/></Suspense>} />
+                    <Route path="profile" element={<Suspense fallback={<SpinnerLoading/>}><Profile/></Suspense>} />
+
+                    <Route element={<AuthSubscriptionGuard />}>
+                      <Route path="rent" element={<Suspense fallback={<SpinnerLoading/>}><Rent/></Suspense>} /> 
+                      <Route path="change-subscription" element={<Suspense fallback={<SpinnerLoading/>}><ChangeSubscription/></Suspense>} />
+                      <Route path="incidences/create/:id" element={<Suspense fallback={<SpinnerLoading/>}><IncidencesCreate/></Suspense>} />
+                    </Route>
+                    
+                    <Route element={<AdminGuard />}>
+                      <Route path="dashboard" element={<Suspense fallback={<SpinnerLoading/>}><Dashboard/></Suspense>} />
+                      <Route path="stations" element={<Suspense fallback={<SpinnerLoading/>}><Stations/></Suspense>} />
+                      <Route path="station/create" element={<Suspense fallback={<SpinnerLoading/>}><StationsCreate/></Suspense>} />
+                      <Route path="station/edit/:id" element={<Suspense fallback={<SpinnerLoading/>}><StationsUpdate/></Suspense>} />
+                      <Route path="slot" element={<Suspense fallback={<SpinnerLoading/>}><Slot/></Suspense>} />
+                      <Route path="slot/create" element={<Suspense fallback={<SpinnerLoading/>}><SlotCreate/></Suspense>} />
+                      <Route path="slot/edit/:id" element={<Suspense fallback={<SpinnerLoading/>}><SlotUpdate/></Suspense>} />
+                      <Route path="bikes" element={<Suspense fallback={<SpinnerLoading/>}><Bikes/></Suspense>} />
+                      <Route path="bike/create" element={<Suspense fallback={<SpinnerLoading/>}><BikesCreate/></Suspense>} />
+                      <Route path="bike/edit/:id" element={<Suspense fallback={<SpinnerLoading/>}><BikesUpdate/></Suspense>} />
+                      <Route path="incidences" element={<Suspense fallback={<SpinnerLoading/>}><Incidences/></Suspense>} />
+                      <Route path="incidences/edit/:id" element={<Suspense fallback={<SpinnerLoading/>}><IncidencesUpdate/></Suspense>} />
+                      <Route path="notification" element={<Suspense fallback={<SpinnerLoading/>}><Notification/></Suspense>} />
+                    </Route>
+                  </Route>
+
+                  <Route path="*" element={<Suspense fallback={<SpinnerLoading/>}><NotFound/></Suspense>} />
+                </Route>
               </Routes>
             </StationsContextProvider>
           </RentContextProvider>
+          <Footer/>
+          <ToastComponent/>
         </NotificationContextProvider>
       </AuthContextProvider>
-    </BrowserRouter>
+    </ToastContextProvider>
+  </BrowserRouter>
   );
 }
 

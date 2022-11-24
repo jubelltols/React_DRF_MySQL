@@ -10,7 +10,7 @@ describe('test login', () => {
     })
 
     it('Buscar el input de password y introducir el password', () => {
-        cy.get(':nth-child(2) > .form-control').type("jubelltols")
+        cy.get(':nth-child(2) > .form-control').type("2DAW-2021-jumi")
     })
 
     it('Buscar el boton de signin y hacer click', () => {

@@ -1,37 +1,35 @@
-import React from "react";
-import { Nav, Tab, Row, Col, Container } from 'react-bootstrap';
+import React, { useState } from "react";
 
 import UpdateUser from "../../components/User/UpdateUser"
 import ChangePassword from "../../components/User/ChangePassword"
+import Subscription from "../../components/User/Subscription"
+import { useTranslation } from "react-i18next";
 
-export default function Home() {
+export default function Profile() {
+    const { t } = useTranslation("global");
+    const [tab, setTab] = useState(3);
 
     return (
-        <Container fluid className="mt-5">
-            <Tab.Container id="left-tabs-example" defaultActiveKey="first">
-                <Row>
-                    <Col sm={3}>
-                        <Nav variant="pills" className="flex-column">
-                            <Nav.Item>
-                                <Nav.Link eventKey="first">Profile</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                                <Nav.Link eventKey="second">Change password</Nav.Link>
-                            </Nav.Item>
-                        </Nav>
-                    </Col>
-                    <Col sm={9}>
-                        <Tab.Content>
-                            <Tab.Pane eventKey="first">
-                                <UpdateUser/>
-                            </Tab.Pane>
-                            <Tab.Pane eventKey="second">
-                                <ChangePassword/>
-                            </Tab.Pane>
-                        </Tab.Content>
-                    </Col>
-                </Row>
-            </Tab.Container>
-        </Container>
+        <section className="min-h-screen bg-base-200">
+            <div className="col-span-3 row-span-3 flex-shrink-0 flex-col items-center justify-center max-w-5xl mx-auto lg:py-16 px-6 py-8">
+                <div className="tabs w-full flex-grow-0">
+                    <button className={tab === 1 ? "tab tab-lifted tab-active tab-border-none tab-lg flex-1" : "tab tab-lifted tab-border-none tab-lg flex-1"} onClick={() => setTab(1)}>{t('profile')}</button> 
+                    <button className={tab === 2 ? "tab tab-lifted tab-active tab-border-none tab-lg flex-1" : "tab tab-lifted tab-border-none tab-lg flex-1"} onClick={() => setTab(2)}>{t('change_password')}</button>
+                    <button className={tab === 3 ? "tab tab-lifted tab-active tab-border-none tab-lg flex-1" : "tab tab-lifted tab-border-none tab-lg flex-1"} onClick={() => setTab(3)}>{t('subscription')}</button>
+                </div>
+                <div className="bg-base-100 grid w-full flex-grow gap-3 rounded-xl rounded-tl-none p-6 shadow-xl">
+                    <div className="flex items-center space-x-2">
+                        {(() => {
+                            switch (tab) {
+                            case 1:     return <UpdateUser/>;
+                            case 2:     return <ChangePassword/>;
+                            case 3:     return <Subscription/>;
+                            default:    return <UpdateUser/>;
+                            }
+                        })()}
+                    </div>
+                </div>
+            </div>
+        </section>
     )
 }

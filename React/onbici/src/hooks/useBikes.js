@@ -51,7 +51,7 @@ export function useBikes () {
                 setBikes(
                     bikes.map(function (bike, index, array) {
                         if(bike.id === id){
-                            bike.status = bike.status === "active" ? "disabñe" : "active"
+                            bike.status = bike.status === "active" ? "disable" : "active"
                         }
                         return bike; 
                     })

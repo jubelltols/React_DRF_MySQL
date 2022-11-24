@@ -1,9 +1,11 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, useContext } from 'react'
 import { useNavigate } from "react-router-dom"
 
+import AuthContext from "../context/AuthContext"
 import IncidencesService from '../services/IncidencesService'
 
 export function useIncidences () {
+    const { isAdmin } = useContext(AuthContext)
     const [loading, setLoading] = useState(false)
     const [incidences, setIncidences] = useState([])
     const [isCorrect, setIsCorrect] = useState(false)
@@ -21,15 +23,18 @@ export function useIncidences () {
     const createIncidence = useCallback((data) =>{
         IncidencesService.createIncidence(data)
         .then(({data}) => {
-            console.log("hola")
             if(data){
-                navigate('/rent');
+                if(isAdmin){
+                    navigate('/incidences');
+                }else{
+                    navigate('/rent');
+                }
+                
             }
         })
     },[])
 
     const updateIncidence = useCallback((id, data) =>{
-        console.log(data);
         IncidencesService.updateIncidence(id, data)
         .then(({data}) => {
             if(data){
